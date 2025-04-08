@@ -197,4 +197,3 @@ export default function ResultsPage({ params }: { params: { id: string } }) {
     </div>
   )
 }
-

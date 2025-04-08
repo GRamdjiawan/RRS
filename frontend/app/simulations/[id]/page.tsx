@@ -258,4 +258,3 @@ export default function SimulationPage({ params }: { params: { id: string } }) {
     </div>
   )
 }
-
