@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { ArrowRight, Shield, ShieldAlert } from "lucide-react"
+import { ArrowRight, ShieldAlert } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
@@ -19,36 +19,23 @@ export default function Home() {
           <CardHeader className="text-center">
             <CardTitle className="text-3xl sm:text-4xl font-bold">Test je ransomware kennis</CardTitle>
             <CardDescription className="text-lg mt-2">
-              Neem deel aan een interactieve quiz met een vriend en leer hoe je moet reageren op ransomware-aanvallen
+              Leer hoe je moet reageren op ransomware-aanvallen met onze interactieve quiz
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="flex flex-col items-center p-6 rounded-lg border border-border bg-card/50 text-center">
-                <Shield className="h-12 w-12 text-primary mb-4" />
-                <h3 className="text-xl font-semibold mb-2">Leer samen</h3>
-                <p className="text-muted-foreground">
-                  Speel met een vriend en leer hoe je ransomware-aanvallen kunt herkennen en erop kunt reageren.
-                </p>
-              </div>
-              <div className="flex flex-col items-center p-6 rounded-lg border border-border bg-card/50 text-center">
-                <ShieldAlert className="h-12 w-12 text-primary mb-4" />
-                <h3 className="text-xl font-semibold mb-2">Test je kennis</h3>
-                <p className="text-muted-foreground">
-                  Beantwoord 5 multiple-choice vragen en ontdek hoe goed je voorbereid bent op ransomware-dreigingen.
-                </p>
-              </div>
+            <div className="p-6 rounded-lg border border-border bg-card/50 text-center">
+              <ShieldAlert className="h-12 w-12 text-primary mx-auto mb-4" />
+              <h3 className="text-xl font-semibold mb-2">Wat is ransomware?</h3>
+              <p className="text-muted-foreground">
+                Ransomware is een type malware dat toegang tot een computer of bestanden blokkeert en losgeld eist om de
+                toegang te herstellen. Leer hoe je deze aanvallen kunt herkennen, voorkomen en erop kunt reageren.
+              </p>
             </div>
           </CardContent>
           <CardFooter className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button size="lg" asChild>
               <Link href="/login">
-                Inloggen <ArrowRight className="ml-2 h-4 w-4" />
-              </Link>
-            </Button>
-            <Button size="lg" variant="outline" asChild>
-              <Link href="/quiz">
-                Direct starten <ArrowRight className="ml-2 h-4 w-4" />
+                Inloggen of registreren <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
             </Button>
           </CardFooter>
