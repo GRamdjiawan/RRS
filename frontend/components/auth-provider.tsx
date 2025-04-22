@@ -12,7 +12,7 @@ type User = {
 type AuthContextType = {
   user: User | null
   login: (email: string, password: string) => Promise<boolean>
-  register: (name: string, email: string, password: string) => Promise<boolean>
+  register: (username: string, password: string) => Promise<boolean>
   logout: () => void
   isLoading: boolean
 }
@@ -46,104 +46,84 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }, [user, isLoading, pathname, router])
 
-  const login = async (email: string, password: string): Promise<boolean> => {
+  const login = async (username: string, password: string): Promise<boolean> => {
     setIsLoading(true)
 
-    // COMMENT: In a real application, you would make an API call here
-    // Example API call:
-    // try {
-    //   const response = await fetch('/api/auth/login', {
-    //     method: 'POST',
-    //     headers: { 'Content-Type': 'application/json' },
-    //     body: JSON.stringify({ email, password })
-    //   });
-    //   const data = await response.json();
-    //   if (data.success) {
-    //     setUser(data.user);
-    //     localStorage.setItem('user', JSON.stringify(data.user));
-    //     setIsLoading(false);
-    //     return true;
-    //   } else {
-    //     setIsLoading(false);
-    //     return false;
-    //   }
-    // } catch (error) {
-    //   console.error('Login error:', error);
-    //   setIsLoading(false);
-    //   return false;
-    // }
+    try {
 
-    // Simulate API call
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        // Simple validation - in a real app, this would be a server call
-        if (email && password.length >= 6) {
-          const newUser = {
-            id: "1",
-            name: email.split("@")[0],
-            email,
-          }
-          setUser(newUser)
-          localStorage.setItem("user", JSON.stringify(newUser))
-          setIsLoading(false)
-          resolve(true)
+      const url = `http://localhost:3030/api/users/${username}`
+      const response = await fetch(url, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' },
+      });
+      const data = await response.json();
+      if (response.ok && data.success) {
+        console.log("User data:", data);
+
+        if (data.user.password === password) {
+          setUser(data.user);
+          localStorage.setItem('user', JSON.stringify(data.user));
+          setIsLoading(false);
+          return true;
         } else {
-          setIsLoading(false)
-          resolve(false)
+          console.error('Incorrect password');
+          setIsLoading(false);
+          return false;
         }
-      }, 1000)
-    })
+      } else {
+        console.error('Login failed:', data.message);
+        setIsLoading(false);
+        return false;
+      }
+    } catch (error) {
+      console.error('Login error:', error);
+      setIsLoading(false);
+      return false;
+    }
+
   }
 
-  const register = async (name: string, email: string, password: string): Promise<boolean> => {
+  const register = async (username: string, password: string): Promise<boolean> => {
     setIsLoading(true)
 
-    // COMMENT: In a real application, you would make an API call here
-    // Example API call:
-    // try {
-    //   const response = await fetch('/api/auth/register', {
-    //     method: 'POST',
-    //     headers: { 'Content-Type': 'application/json' },
-    //     body: JSON.stringify({ name, email, password })
-    //   });
-    //   const data = await response.json();
-    //   if (data.success) {
-    //     setUser(data.user);
-    //     localStorage.setItem('user', JSON.stringify(data.user));
-    //     setIsLoading(false);
-    //     return true;
-    //   } else {
-    //     setIsLoading(false);
-    //     return false;
-    //   }
-    // } catch (error) {
-    //   console.error('Registration error:', error);
-    //   setIsLoading(false);
-    //   return false;
-    // }
+    try {
+      const role = "user"
 
-    // Simulate API call
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        // Simple validation - in a real app, this would be a server call
-        if (name && email && password.length >= 6) {
-          const newUser = {
-            id: "1",
-            name,
-            email,
-          }
-          setUser(newUser)
-          localStorage.setItem("user", JSON.stringify(newUser))
-          setIsLoading(false)
-          resolve(true)
-        } else {
-          setIsLoading(false)
-          resolve(false)
-        }
-      }, 1000)
-    })
+      const reqBody = {
+        username,
+        password,
+        role
+      }
+
+      console.log("Registering user:", reqBody);
+      
+      const response = await fetch('http://localhost:3030/api/users', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(reqBody)
+      });
+      if (!response.ok) {
+        console.error('Server error:', response.status, response.statusText);
+        setIsLoading(false);
+        return false;
+      }
+      const data = await response.json();
+      if (data.success) {
+        setUser(data.user);
+        localStorage.setItem('user', JSON.stringify(data.user));
+        setIsLoading(false);
+        return true;
+      } else {
+        console.log('Registration failed:', data.message);
+        setIsLoading(false);
+        return false;
+      }
+    } catch (error) {
+      console.error('Registration error:', error);
+      setIsLoading(false);
+      return false;
+    }
   }
-
   const logout = () => {
     // COMMENT: In a real application, you might want to make an API call here
     // Example API call:

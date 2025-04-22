@@ -6,5 +6,6 @@ import com.example.RRS.Entity.Question;
 import java.util.List;
 
 public interface QuestionRepository extends JpaRepository<Question, Integer> {
-    List<Question> findByQuiz_QuizId(int quizId);
+    List<Question> findByQuiz_Id(int id);
+
 }

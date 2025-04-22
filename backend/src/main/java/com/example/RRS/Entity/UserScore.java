@@ -8,7 +8,7 @@ public class UserScore {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int scoreId;
+    private int id;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -29,12 +29,12 @@ public class UserScore {
         this.score = score;
     }
 
-    public int getScoreId() {
-        return scoreId;
+    public int getId() {
+        return id;
     }
 
-    public void setScoreId(int scoreId) {
-        this.scoreId = scoreId;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public User getUser() {
@@ -64,7 +64,7 @@ public class UserScore {
     @Override
     public String toString() {
         return "UserScore{" +
-                "scoreId=" + scoreId +
+                "id=" + id +
                 ", user=" + user +
                 ", quiz=" + quiz +
                 ", score=" + score +

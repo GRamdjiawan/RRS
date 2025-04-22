@@ -14,7 +14,7 @@ public class AnswerService {
     private AnswerRepository answerRepository;
 
     public List<Answer> getAnswersByQuestionId(int questionId) {
-        return answerRepository.findByQuestion_QuestionId(questionId);
+        return answerRepository.findByQuestion_id(questionId);
     }
 
     public Answer saveAnswer(Answer answer) {

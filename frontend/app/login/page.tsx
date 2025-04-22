@@ -14,6 +14,7 @@ import { useAuth } from "@/components/auth-provider"
 import { useToast } from "@/components/ui/use-toast"
 // Update imports to include Tabs components
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { log } from "console"
 
 // Update the LoginPage component to include registration
 export default function LoginPage() {
@@ -24,12 +25,11 @@ export default function LoginPage() {
   const [isLoading, setIsLoading] = useState(false)
   const [activeTab, setActiveTab] = useState("login")
   const [loginData, setLoginData] = useState({
-    email: "",
+    username: "",
     password: "",
   })
   const [registerData, setRegisterData] = useState({
-    name: "",
-    email: "",
+    username: "",
     password: "",
   })
 
@@ -48,7 +48,7 @@ export default function LoginPage() {
     setIsLoading(true)
 
     try {
-      const success = await login(loginData.email, loginData.password)
+      const success = await login(loginData.username, loginData.password)
 
       if (success) {
         toast({
@@ -78,9 +78,11 @@ export default function LoginPage() {
     e.preventDefault()
     setIsLoading(true)
 
-    try {
-      const success = await register(registerData.name, registerData.email, registerData.password)
+    console.log("Register data:", registerData)
 
+    try {
+      const success = await register(registerData.username, registerData.password)
+      console.log("Registration success:", success)
       if (success) {
         toast({
           title: "Geregistreerd",
@@ -124,13 +126,13 @@ export default function LoginPage() {
             <form onSubmit={handleLoginSubmit}>
               <CardContent className="space-y-4 pt-4">
                 <div className="space-y-2">
-                  <Label htmlFor="email">E-mailadres</Label>
+                  <Label htmlFor="email">Username</Label>
                   <Input
-                    id="email"
-                    name="email"
-                    type="email"
-                    placeholder="naam@voorbeeld.nl"
-                    value={loginData.email}
+                    id="username"
+                    name="username"
+                    type="text"
+                    placeholder="Username"
+                    value={loginData.username}
                     onChange={handleLoginChange}
                     required
                   />
@@ -188,24 +190,12 @@ export default function LoginPage() {
             <form onSubmit={handleRegisterSubmit}>
               <CardContent className="space-y-4 pt-4">
                 <div className="space-y-2">
-                  <Label htmlFor="register-name">Naam</Label>
+                  <Label htmlFor="username">Username</Label>
                   <Input
-                    id="register-name"
-                    name="name"
-                    placeholder="Volledige naam"
-                    value={registerData.name}
-                    onChange={handleRegisterChange}
-                    required
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="register-email">E-mailadres</Label>
-                  <Input
-                    id="register-email"
-                    name="email"
-                    type="email"
-                    placeholder="naam@voorbeeld.nl"
-                    value={registerData.email}
+                    id="username"
+                    name="username"
+                    placeholder="Username"
+                    value={registerData.username}
                     onChange={handleRegisterChange}
                     required
                   />

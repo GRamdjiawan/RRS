@@ -1,5 +1,7 @@
 package com.example.RRS.Entity;
 
+import com.example.RRS.Interface.Validatable;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -8,7 +10,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "users")
-public class User {
+public class User implements Validatable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,6 +27,11 @@ public class User {
         this.username = username;
         this.password = password;
         this.role = role;
+    }
+
+    @Override
+    public boolean isValid() {
+        return username != null && !username.isBlank() && password != null && password.length() >= 6;
     }
 
     public Long getId() {

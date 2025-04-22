@@ -14,7 +14,7 @@ public class UserScoreService {
     private UserScoreRepository userScoreRepository;
 
     public List<UserScore> getScoresByUserId(int userId) {
-        return userScoreRepository.findByUser_UserId(userId);
+        return userScoreRepository.findByUser_Id(userId);
     }
 
     public UserScore saveScore(UserScore userScore) {

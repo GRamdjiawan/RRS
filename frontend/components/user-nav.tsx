@@ -18,19 +18,18 @@ export function UserNav() {
   const { user, logout } = useAuth()
 
   if (!user) return null
-
-  const initials = user.name
-    .split(" ")
-    .map((n) => n[0])
-    .join("")
-    .toUpperCase()
-
+  console.log(user);
+  
+  // let initials = user.name[0]
+  //   if (user.name.length > 2) {
+  //     let initials = user.name.split(" ")[0][0] + user.name.split(" ")[1][0]
+  //   }
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="relative h-8 w-8 rounded-full">
           <Avatar className="h-8 w-8">
-            <AvatarFallback>{initials}</AvatarFallback>
+            <AvatarFallback>{"G"}</AvatarFallback>
           </Avatar>
         </Button>
       </DropdownMenuTrigger>

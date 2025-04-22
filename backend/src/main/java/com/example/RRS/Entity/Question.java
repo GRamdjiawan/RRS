@@ -1,43 +1,33 @@
 package com.example.RRS.Entity;
 
 import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = MultipleChoiceQuestion.class, name = "multiple_choice"),
+        @JsonSubTypes.Type(value = TrueFalseQuestion.class, name = "true_false")
+})
 
 @Entity
-@Table(name = "questions")
-public class Question {
+@Inheritance(strategy = InheritanceType.JOINED)
+public abstract class Question {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int questionId;
-
-    @ManyToOne
-    @JoinColumn(name = "quiz_id")
-    private Quiz quiz;
+    private int id;
 
     private String questionText;
 
-    public Question() {
+    public abstract boolean checkAnswer(String answer);
+
+    public int getId() {
+        return id;
     }
 
-    public Question(Quiz quiz, String questionText) {
-        this.quiz = quiz;
-        this.questionText = questionText;
-    }
-
-    public int getQuestionId() {
-        return questionId;
-    }
-
-    public void setQuestionId(int questionId) {
-        this.questionId = questionId;
-    }
-
-    public Quiz getQuiz() {
-        return quiz;
-    }
-
-    public void setQuiz(Quiz quiz) {
-        this.quiz = quiz;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getQuestionText() {
@@ -46,14 +36,5 @@ public class Question {
 
     public void setQuestionText(String questionText) {
         this.questionText = questionText;
-    }
-
-    @Override
-    public String toString() {
-        return "Question{" +
-                "questionId=" + questionId +
-                ", quiz=" + quiz +
-                ", questionText='" + questionText + '\'' +
-                '}';
     }
 }

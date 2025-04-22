@@ -8,7 +8,7 @@ public class Answer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int answerId;
+    private int id;
 
     @ManyToOne
     @JoinColumn(name = "question_id")
@@ -26,12 +26,12 @@ public class Answer {
         this.isCorrect = isCorrect;
     }
 
-    public int getAnswerId() {
-        return answerId;
+    public int getid() {
+        return id;
     }
 
-    public void setAnswerId(int answerId) {
-        this.answerId = answerId;
+    public void setid(int id) {
+        this.id = id;
     }
 
     public Question getQuestion() {
@@ -61,7 +61,7 @@ public class Answer {
     @Override
     public String toString() {
         return "Answer{" +
-                "answerId=" + answerId +
+                "id=" + id +
                 ", question=" + question +
                 ", answerText='" + answerText + '\'' +
                 ", isCorrect=" + isCorrect +

@@ -18,7 +18,7 @@ public class QuestionService {
     }
 
     public List<Question> getQuestionsByQuizId(int quizId) {
-        return questionRepository.findByQuiz_QuizId(quizId);
+        return questionRepository.findByQuiz_Id(quizId);
     }
 
     public Question saveQuestion(Question question) {

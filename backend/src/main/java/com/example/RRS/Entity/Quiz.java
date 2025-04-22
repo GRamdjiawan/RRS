@@ -8,7 +8,7 @@ public class Quiz {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int quizId;
+    private int id;
 
     private String title;
     private String description;
@@ -21,12 +21,12 @@ public class Quiz {
         this.description = description;
     }
 
-    public int getQuizId() {
-        return quizId;
+    public int getId() {
+        return id;
     }
 
-    public void setQuizId(int quizId) {
-        this.quizId = quizId;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getTitle() {
@@ -48,7 +48,7 @@ public class Quiz {
     @Override
     public String toString() {
         return "Quiz{" +
-                "quizId=" + quizId +
+                "id=" + id +
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
                 '}';

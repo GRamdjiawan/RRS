@@ -90,6 +90,8 @@
                             <version>1.18.24</version> 
                         </path>
                     </annotationProcessorPaths>
+                    <source>21</source>
+                    <target>21</target>
                 </configuration>
             </plugin>
             <plugin>

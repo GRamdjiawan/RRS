@@ -43,22 +43,22 @@ export default function ResultsPage() {
       setResults(JSON.parse(storedResults))
     }
 
-    // COMMENT: In a real application, you would fetch the results from an API
-    // Example API call:
-    // const fetchResults = async () => {
-    //   try {
-    //     const response = await fetch(`/api/quiz/results?userId=${user?.id}`);
-    //     const data = await response.json();
-    //     if (data.success) {
-    //       setResults(data.results);
-    //     }
-    //   } catch (error) {
-    //     console.error('Error fetching results:', error);
-    //   }
-    // };
-    // if (user) {
-    //   fetchResults();
-    // }
+    const fetchResults = async () => {
+      if (!user) return;
+
+      try {
+      const response = await fetch(`http://localhost/api/quiz/results?userId=${user.id}`);
+      if (!response.ok) {
+        throw new Error(`Error fetching results: ${response.statusText}`);
+      }
+      const data = await response.json();
+      setResults(data.results);
+      } catch (error) {
+      console.error("Error fetching results:", error);
+      }
+    };
+
+    fetchResults();
   }, [user])
 
   if (!results) {

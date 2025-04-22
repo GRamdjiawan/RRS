@@ -15,14 +15,19 @@ public class UserService {
     private UserRepository userRepository;
 
     public Optional<User> findByUsername(String username) {
-        return userRepository.findByUsername(username); // Implement repository method to find by username
+        return userRepository.findByUsername(username);
     }
 
     public User saveUser(User user) {
-        return userRepository.save(user);
+        Optional<User> existingUser = userRepository.findByUsername(user.getUsername());
+        if (existingUser.isPresent()) {
+            throw new RuntimeException("User already exists");
+        } else {
+            return userRepository.save(user);
+        }
     }
 
     public List<User> getAllUsers() {
-        return userRepository.findAll(); // Implement repository method to get all users
+        return userRepository.findAll();
     }
 }
